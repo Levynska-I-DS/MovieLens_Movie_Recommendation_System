@@ -30,7 +30,7 @@ This project consists of several Jupyter Notebooks, each serving different purpo
 
 4. **Data_Enrichment_and_Model_Improvement.ipynb:** Demonstrates the development of an enhanced movie recommendation system using the MovieLens dataset enriched with data from The Movie Database (TMDB) API. 
 
-5. **interface_method_model_ML_GUI.ipynb:** Provides a detailed description of the graphical user interface (GUI) that interacts with the machine learning model. Explains the GUI's purpose, how to run it from a Python script, and its integration with the recommendation system.
+5. **Interface_method_model_ML_GUI.ipynb:** Provides a detailed description of the graphical user interface (GUI) that interacts with the machine learning model. Explains the GUI's purpose, how to run it from a Python script, and its integration with the recommendation system.
 
 6. **PowerBI_Analysis.ipynb:** Includes Power BI integration for visualizing and analyzing the recommendation system's performance and insights. Helps in understanding data trends and evaluating model effectiveness through interactive dashboards.
 
