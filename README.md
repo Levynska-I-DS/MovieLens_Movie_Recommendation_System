@@ -46,16 +46,22 @@ To set up the project locally, follow these steps:
     cd MovieLens-Recommendation-System
     ```
 
-3. Install the required dependencies:
+3. Install and create the conda environment using the provided `environment.yml` file:
     ```bash
-    pip install -r requirements.txt
+    conda env create --file environment.yml
+    ```
+   This will create a new conda environment named `movie_rec_sys` (or whatever name you specified in the `environment.yml` file).
+
+4. Activate the conda environment:
+    ```bash
+    conda activate movie_rec_sys
     ```
 
-4. Download the MovieLens dataset and place it in the `data` directory. The dataset can be acquired from [MovieLens](https://grouplens.org/datasets/movielens/).
+5. (Optional) If you're using Visual Studio Code, you can select the newly created environment as your Python interpreter.
 
+6. Download the MovieLens dataset and place it in the `data` directory. The dataset can be acquired from [MovieLens](https://grouplens.org/datasets/movielens/).
 
-
-**Note:** If any of the above files are missing, the corresponding functionality may not work as expected.
+**Note:** Ensure that you have Anaconda or Miniconda installed on your system before following these steps.
 
 Once the setup is complete, you can use the provided Jupyter Notebooks to preprocess data, train models, and make predictions.
 
@@ -92,17 +98,39 @@ After training and evaluating each model, the results were as follows:
 | **NMF**       | 0.8712 | 0.6626|
 | **BaselineOnly** | 0.8630 | 0.6573|
 
-Among these, the SVD model demonstrated the best performance, with an RMSE of 0.7856 and an MAE of 0.5889. This model was most effective in predicting user ratings and delivering accurate recommendations.  
-To enhance the recommendation system, we implemented a hybrid approach that combined collaborative filtering using SVD, content-based filtering based on movie genres, and suggestions of newly added movies that users hadn't rated yet. This hybrid approach allowed us to generate more comprehensive and personalized recommendations, balancing between user preferences, content similarity, and novelty.
+Among these, the SVD model demonstrated the best performance, with an RMSE of 0.7856 and an MAE of 0.5889. This model was most effective in predicting user ratings and delivering accurate recommendations. To enhance the recommendation system, we implemented a hybrid approach that combined collaborative filtering using SVD, content-based filtering based on movie genres, and suggestions of newly added movies that users hadn't rated yet. This hybrid approach allowed us to generate more comprehensive and personalized recommendations, balancing between user preferences, content similarity, and novelty.
+
+
+## Data Enrichment and Model Improvement
+
+In our efforts to enhance the recommendation system, we implemented a data enrichment process using The Movie Database (TMDB) API. This process involved:
+
+1. Fetching additional data from TMDB API for the first 1000 movies
+2. Normalizing TMDB ratings and merging them with our MovieLens data
+3. Training an SVD model on this enriched dataset
+
+### Results of Enriched Model
+
+Our enriched SVD model achieved:
+- RMSE on test set: 0.7861
+- MAE on test set: 0.5894
+
+### Interpretation
+
+The enriched SVD model performs similarly to the original SVD model, with only a slight decrease in performance. It still outperforms NMF and BaselineOnly models significantly. This suggests that while the TMDB data enrichment didn't substantially improve our predictions, it also didn't negatively impact the model's performance.
+
+The small difference between training and test set performance (RMSE: 0.6766 vs 0.7861, MAE: 0.5109 vs 0.5894) indicates that our model generalizes well to unseen data without severe overfitting.
 
 ## Results
 
+Our SVD-based recommendation system, even with enriched data, proves to be robust and effective for movie recommendations. The data enrichment process demonstrates the potential for integrating external data sources to enhance recommendation systems, although in this case, the improvement was minimal.
+
+Future work could explore more sophisticated ways of integrating external data or experimenting with hybrid models to further improve performance.
+
 We used RMSE (Root Mean Square Error) and MAE (Mean Absolute Error) as metrics to evaluate model performance. The final model achieved an RMSE of 0.7864 and an MAE of 0.5894, indicating its effectiveness in predicting user ratings and making accurate recommendations. The hybrid approach, which included SVD for collaborative filtering, further enhanced the recommendation quality by incorporating multiple methods to address different user needs and preferences.
-
-## Prediction Function
-
-The final function allows making predictions for new data using the trained model. When a prediction is made, the function processes the input data, applies the recommendation algorithm, and outputs the predicted ratings or recommended movies.
 
 ## Final Remarks
 
 This project demonstrates the application of machine learning techniques to build a recommendation system using the MovieLens dataset. Future work may involve incorporating additional features, exploring deep learning approaches, or deploying the recommendation system as a web application for real-time use.
+
+
