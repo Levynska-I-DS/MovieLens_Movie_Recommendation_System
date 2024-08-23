@@ -30,10 +30,13 @@ This project consists of several Jupyter Notebooks, each serving different purpo
 
 4. **Data_Enrichment_and_Model_Improvement.ipynb:** Demonstrates the development of an enhanced movie recommendation system using the MovieLens dataset enriched with data from The Movie Database (TMDB) API. 
 
-5. **interface_method_model_ML_GUI.ipynb:** Provides a detailed description of the graphical user interface (GUI) that interacts with the machine learning model. Explains the GUI's purpose, how to run it from a Python script, and its integration with the recommendation system.
+5. **Interface_method_model_ML_GUI.ipynb:** Provides a detailed description of the graphical user interface (GUI) that interacts with the machine learning model. Explains the GUI's purpose, how to run it from a Python script, and its integration with the recommendation system.
 
 6. **PowerBI_Analysis.ipynb:** Includes Power BI integration for visualizing and analyzing the recommendation system's performance and insights. Helps in understanding data trends and evaluating model effectiveness through interactive dashboards.
 
+7. **Normal_Predictor_Model.ipynb:** Demonstrates the implementation of a basic recommendation model using the Normal Predictor from the Surprise library. This model serves as a baseline, making random predictions based on the distribution of ratings.
+
+8. **KNN_Model.ipynb:** Implements a K-Nearest Neighbors (KNN) model for movie recommendation. Evaluates the KNN algorithm's performance and compares it with other recommendation models.
 
 ## Installation and Setup
 
@@ -89,51 +92,54 @@ The initial exploratory data analysis (EDA) includes visualizing the distributio
 
 ## Model Choices
 
-We evaluated three recommendation models:
+We evaluated several recommendation models:
+
 - **SVD (Singular Value Decomposition):** A matrix factorization technique that approximates user-item interactions by decomposing the rating matrix.
 - **NMF (Non-negative Matrix Factorization):** Another matrix factorization method focused on non-negative values, offering a different approach to factorization.
 - **BaselineOnly:** A basic model that accounts for user and item biases without additional complexity.
+- **KNN (K-Nearest Neighbors):** A neighborhood-based approach that makes recommendations based on the similarity between users or items.
+- **Normal Predictor:** A baseline model making random predictions based on the distribution of ratings.
 
-After training and evaluating each model, the results were as follows:  
-| Model         | RMSE   | MAE   |
-|---------------|--------|-------|
-| **SVD**       | 0.7856 | 0.5889|
-| **NMF**       | 0.8712 | 0.6626|
-| **BaselineOnly** | 0.8630 | 0.6573|
+The models were evaluated using RMSE (Root Mean Square Error) and MAE (Mean Absolute Error). The final evaluation results are as follows:
 
-Among these, the SVD model demonstrated the best performance, with an RMSE of 0.7856 and an MAE of 0.5889. This model was most effective in predicting user ratings and delivering accurate recommendations. To enhance the recommendation system, we implemented a hybrid approach that combined collaborative filtering using SVD, content-based filtering based on movie genres, and suggestions of newly added movies that users hadn't rated yet. This hybrid approach allowed us to generate more comprehensive and personalized recommendations, balancing between user preferences, content similarity, and novelty.
+| Model            | RMSE   | MAE   |
+|------------------|--------|-------|
+| **BaselineOnly** | 0.8639 | 0.6583|
+| **SVD**          | 0.9004 | 0.6880|
+| **NMF**          | 0.9601 | 0.7301|
+| **KNN**          | 1.0689 | 0.8447|
+| **Normal Predictor** | 1.4495 | 1.1542|
 
+The `BaselineOnly` model was found to be the best-performing model with the lowest RMSE and MAE. This model was also used to test enriched data from The Movie Database (TMDB) API.
 
 ## Data Enrichment and Model Improvement
 
-In our efforts to enhance the recommendation system, we implemented a data enrichment process using The Movie Database (TMDB) API. This process involved:
+To enhance the recommendation system, we enriched the dataset with additional data from The Movie Database (TMDB) API. The process involved:
 
-1. Fetching additional data from TMDB API for the first 1000 movies
-2. Normalizing TMDB ratings and merging them with our MovieLens data
-3. Training an SVD model on this enriched dataset
+1. Fetching additional data from TMDB API for the first 2000 movies.
+2. Normalizing TMDB ratings and merging them with our MovieLens data.
+3. Retraining the `BaselineOnly` model on this enriched dataset.
 
 ### Results of Enriched Model
 
-Our enriched SVD model achieved:
-- RMSE on test set: 0.7861
-- MAE on test set: 0.5894
+Our enriched `BaselineOnly` model achieved:
+- RMSE on test set: 0.8634
+- MAE on test set: 0.6575
+
 
 ### Interpretation
 
-The enriched SVD model performs similarly to the original SVD model, with only a slight decrease in performance. It still outperforms NMF and BaselineOnly models significantly. This suggests that while the TMDB data enrichment didn't substantially improve our predictions, it also didn't negatively impact the model's performance.
-
-The small difference between training and test set performance (RMSE: 0.6766 vs 0.7861, MAE: 0.5109 vs 0.5894) indicates that our model generalizes well to unseen data without severe overfitting.
+The enriched `BaselineOnly` model showed slight improvements in performance with the enriched data. It outperformed all other models, including SVD and NMF. This suggests that while the TMDB data enrichment provided a small boost, it enhanced the overall recommendation quality.
 
 ## Results
 
-Our SVD-based recommendation system, even with enriched data, proves to be robust and effective for movie recommendations. The data enrichment process demonstrates the potential for integrating external data sources to enhance recommendation systems, although in this case, the improvement was minimal.
+Our BaselineOnly-based recommendation system, even with enriched data, proves to be robust and effective for movie recommendations. The data enrichment process demonstrates the potential for integrating external data sources to enhance recommendation systems, although in this case, the improvement was minimal.
 
 Future work could explore more sophisticated ways of integrating external data or experimenting with hybrid models to further improve performance.
-
-We used RMSE (Root Mean Square Error) and MAE (Mean Absolute Error) as metrics to evaluate model performance. The final model achieved an RMSE of 0.7864 and an MAE of 0.5894, indicating its effectiveness in predicting user ratings and making accurate recommendations. The hybrid approach, which included SVD for collaborative filtering, further enhanced the recommendation quality by incorporating multiple methods to address different user needs and preferences.
 
 ## Final Remarks
 
 This project demonstrates the application of machine learning techniques to build a recommendation system using the MovieLens dataset. Future work may involve incorporating additional features, exploring deep learning approaches, or deploying the recommendation system as a web application for real-time use.
+
 
 
